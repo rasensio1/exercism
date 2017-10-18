@@ -5,8 +5,8 @@ class Trinary
 
   def to_decimal
     return 0 if !@string.match(/\A[012]*\z/)
-    nums = @string.chars.map(&:to_i).reverse
-    nums.map.with_index {|num, i| 3**i * num}.sum
+    nums = @string.chars.reverse
+    nums.map.with_index {|num, i| 3**i * num.to_i}.sum
   end
 end
 
