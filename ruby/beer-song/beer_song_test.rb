@@ -1,4 +1,3 @@
-require 'pry'
 require 'minitest/autorun'
 require_relative 'beer_song'
 
