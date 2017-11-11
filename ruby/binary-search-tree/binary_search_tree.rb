@@ -5,14 +5,19 @@ class Bst
     @data = num
   end
 
-  def insert(num)
-    {true => lambda { insert_fac(num, :right, :right=)},
-     false => lambda{ insert_fac(num, :left, :left=)}}[num > data].call
+  def direction(num)
+    {true => [:right, :right=],
+     false => [:left, :left=]}[num > data]
   end
 
-  def insert_fac(num, pos, set)
-    {true => lambda {send(pos).insert(num) },
-     false => lambda {send(set, Bst.new(num))}}[!!send(pos)].call
+  def insert(num)
+    new_or_next(num, *direction(num))
+  end
+
+  def new_or_next(num, pos, set)
+    command = send(pos) ? :next : :new
+    {next: -> {send(pos).insert(num)},
+     new: -> {send(set, Bst.new(num))}}[command].call
   end
 
   def t_data
