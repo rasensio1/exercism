@@ -3,27 +3,25 @@ class Crypto
     @text = string.downcase.gsub(/[^a-z1-9]/, "")
   end
 
+  def format(len, str)
+    "%-#{len}s" % str
+  end
+
   def ciphertext
     len = @text.length
     return @text if len == 0
-    c = (len**0.5).ceil
-    r = (len/c.to_f).ceil
+    columns = (len**0.5).ceil
+    rows = (len / columns.to_f).ceil
 
-    res = Array.new(r) {Array.new(c, " ")}
-    uncoded = res.map.with_index do |e, y|
-      e.map.with_index do |l, x|
-        @text[x + c*y] || " "
-      end
-    end
+    splits = @text.each_char.each_slice(columns)
 
-    coded = Array.new(c) {Array.new(r, " ")}
-    coded.map.with_index do |l, y|
-      l.map.with_index do |e, x|
-        uncoded[x][y]
-      end.join
+    columns.times.map do |y|
+      str = splits.map{ |str| str[y]}.join
+      format(rows, str)
     end.join(" ")
   end
 end
+
 
 module BookKeeping
   VERSION = 1
