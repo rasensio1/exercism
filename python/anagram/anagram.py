@@ -1,11 +1,5 @@
-from collections import Counter
-
 def detect_anagrams(word, candidates):
-    return [w for w in candidates if is_anagram(word.lower(), w.lower())]
-
-def is_anagram(word, can):
-    if word == can:
-        return False 
-    else: 
-        return Counter(word) == Counter(can)
+    w = word.lower()
+    is_ana = lambda c: c != w and sorted(w) == sorted(c)
+    return [c for c in candidates if is_ana(c.lower())]
 
