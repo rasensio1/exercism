@@ -6,14 +6,17 @@ NORTH = (0, 1)
 WEST = (-1, 0) 
 SOUTH = (0, -1) 
 
-
 class Robot(object):
+
+    dirs = [NORTH, EAST, SOUTH, WEST]
+
     def __init__(self, bearing=NORTH, x=0, y=0):
-        self.bearing = bearing
+        self._bearing = self.dirs.index(bearing)
         self.coordinates = (x, y)
 
+    @property
     def bearing(self):
-        return self.bearing
+        return self.dirs[self._bearing]
 
     def turn_right(self):
         self._turn(1)
@@ -33,6 +36,4 @@ class Robot(object):
             ops[i]()
 
     def _turn(self, num):
-        dirs = [NORTH, EAST, SOUTH, WEST]
-        self.bearing = dirs[(dirs.index(self.bearing) + num) % 4]
-
+        self._bearing = (self._bearing + num) % 4
