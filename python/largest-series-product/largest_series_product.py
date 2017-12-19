@@ -1,11 +1,9 @@
 from functools import reduce 
+from operator import mul
 
 def largest_product(series, size):
-    if size == 0:
-        return 1
-
-    def product(coll): return reduce(lambda x,y: x*y, coll)
-    return max(map(lambda coll: product(coll), slices(series, size)))
+    if size == 0: return 1
+    return max(map(lambda coll: reduce(mul, coll), slices(series, size)))
 
 
 def slices(series, length):
