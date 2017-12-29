@@ -18,12 +18,8 @@ class RailFenceCipher
     ((chr_index % (mod * 2) - mod).abs - mod).abs
   end
 
-  def self.idxs_for_rail(string, rails, rail_no)
-    (0...string.length).select { |n| rail_number(n, rails) == rail_no}
-  end
-
   def self.idxs_for_chars(string, rails)
-    (0...rails).flat_map {|n| idxs_for_rail(string, rails, n)}
+    (0..string.length).sort_by { |n| rail_number(n, rails) }
   end
 
 end
